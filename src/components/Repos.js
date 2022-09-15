@@ -1,10 +1,63 @@
 import React from "react";
 import styled from "styled-components";
 import { GithubContext } from "../context/context";
-import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from "./Charts";
+import { Pie3D, Column3D, Bar3D, Doughnut2D } from "./Charts";
 const Repos = () => {
   const { repos } = React.useContext(GithubContext);
-  return <h2>repos component</h2>;
+  //language data
+  const languages = Object.values(
+    repos.reduce((total, item) => {
+      const { language } = item;
+      if (!language) return total;
+      if (!total[language]) {
+        total[language] = { label: language, value: 1 };
+      } else {
+        total[language].value++;
+      }
+      return total;
+    }, {})
+  ).sort((a, b) => b.value - a.value);
+
+  //Stars per language
+  const languageStars = Object.values(
+    repos.reduce((total, item) => {
+      const { language, stargazers_count } = item;
+      if (!language) return total;
+      if (!total[language]) {
+        total[language] = { label: language, value: stargazers_count };
+      } else {
+        total[language].value = total[language].value + stargazers_count;
+      }
+      return total;
+    }, {})
+  ).sort((a, b) => b.value - a.value);
+
+  //Repo star data
+  const mostStars = repos
+    .map((repo) => {
+      return { label: repo.name, value: repo.stargazers_count };
+    })
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 5);
+
+  //Most Fork
+  const mostFork = repos
+    .map((repo) => {
+      return { label: repo.name, value: repo.forks_count };
+    })
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 5);
+
+  return (
+    <section className="section">
+      <Wrapper className="section-center">
+        <Pie3D data={languages} />
+        <Column3D data={mostStars} />
+        <Doughnut2D data={languageStars} />
+        <Bar3D data={mostFork} />
+      </Wrapper>
+    </section>
+  );
 };
 
 const Wrapper = styled.div`

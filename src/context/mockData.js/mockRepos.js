@@ -2676,7 +2676,7 @@ export default // 20220914114536
     has_downloads: true,
     has_wiki: true,
     has_pages: false,
-    forks_count: 0,
+    forks_count: 10,
     mirror_url: null,
     archived: false,
     disabled: false,

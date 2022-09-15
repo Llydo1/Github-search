@@ -11,7 +11,6 @@ const Followers = () => {
       avatar: follower.avatar_url,
     };
   });
-  console.log(newFollowers);
   return (
     <Wrapper>
       <div className="followers">
