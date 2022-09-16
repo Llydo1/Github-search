@@ -4,11 +4,13 @@ import { MdSearch } from "react-icons/md";
 import { GithubContext } from "../context/context";
 
 const Search = () => {
-  const { fetchUser, request, error } = React.useContext(GithubContext);
+  const { fetchUser, request, error, loading } =
+    React.useContext(GithubContext);
   const inputRef = React.useRef();
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchUser(inputRef.current.value);
+    inputRef.current.value = "";
   };
   return (
     <section className="section">
@@ -23,9 +25,9 @@ const Search = () => {
             <MdSearch />
             <input type="text" placeholder="enter github user" ref={inputRef} />
             <button
-              disabled={request === 0}
+              disabled={request === 0 || loading}
               type="submit"
-              style={request ? null : { cursor: "not-allowed" }}
+              style={request && !loading ? null : { cursor: "not-allowed" }}
             >
               Search
             </button>
