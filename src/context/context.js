@@ -33,7 +33,6 @@ const GithubProvider = ({ children }) => {
         axios(data.followers_url),
       ]).then((response) => {
         const [repos, followers] = response;
-        console.log([repos, followers]);
         if (repos.status === "fulfilled") setRepos(repos.value.data);
         if (followers.status === "fulfilled")
           setFollowers(followers.value.data);

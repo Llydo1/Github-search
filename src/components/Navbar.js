@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
-  const { isAuthenticated, loginWithRedirect, logout, user, isLoading } =
-    useAuth0();
+  const { isAuthenticated, logout, user, isLoading } = useAuth0();
   console.log({ isAuthenticated, user, isLoading });
   return (
     <Wrapper>
@@ -14,7 +13,6 @@ const Navbar = () => {
           Welcome, <strong>{user.name.toUpperCase()}</strong>
         </h4>
       )}
-      <button onClick={loginWithRedirect}>Login</button>
       <button onClick={() => logout({ returnTo: window.location.origin })}>
         logout
       </button>
